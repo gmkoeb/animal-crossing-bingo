@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import './index.css'
 import { charactersArray } from './assets/characters'
+import { positions } from './assets/positions'
 
-interface Character {
+type BingoCategory = "B" | "I" | "N" | "G" | "O"
+
+export interface Character {
   name: string
-  category: string
+  category: BingoCategory
 }
 
 function App() {
@@ -17,19 +20,36 @@ function App() {
     }
     return array;
   }
+
+  function generateCardByCategory() {
+    const categories: BingoCategory[] = ["B", "I", "N", "G", "O"]
+    const card: Character[] = []
+    categories.forEach(category => {
+      const filteredCharacters = charactersArray.filter(filteredCharacter => {
+        return filteredCharacter.category === category
+      })
+      positions[category].forEach(position => {
+        const randomCharacter = shuffleArray(filteredCharacters).pop()
+        if (randomCharacter){
+          card[position] = randomCharacter
+        }
+      })
+    })
+    return card
+  }
   
-  function generateBingoCards(array: Character[], quantity: number){
+  function generateBingoCards(quantity: number){
     const cardsArray: Character[][] = []
     for (let i = 0; i < quantity; i++){
-      const card = shuffleArray([...array]).slice(0, 25)
-      card[12] = {"name": "Free", "category": "Free"}
+      const card = generateCardByCategory()
+      card[12] = {"name": "Free", "category": "N"}
       cardsArray.push(card)
     }
     setCards(cardsArray) 
   }
 
   useEffect(() => {
-    generateBingoCards(charactersArray, 25)
+    generateBingoCards(10)
   }, [])
 
   return (

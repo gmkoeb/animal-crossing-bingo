@@ -1,4 +1,6 @@
-export const charactersArray = [
+import type { Character } from "../App";
+
+export const charactersArray: Character[] = [
   { name: "Boots", category: "B" },
   { name: "Annalisa", category: "B" },
   { name: "Megan", category: "B" },
