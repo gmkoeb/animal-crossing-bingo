@@ -87,7 +87,7 @@ export const Home = () => {
 						/>
 
 						<h1 className="text-3xl w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
-							{drawnCharacter.name}
+							{drawnCharacter.category} - {drawnCharacter.name}
 						</h1>
 						<button
 							className="w-full py-3 bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
