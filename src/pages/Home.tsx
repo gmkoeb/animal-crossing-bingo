@@ -22,13 +22,13 @@ export const Home = () => {
 							className="border w-full h-full flex flex-col items-center justify-center"
 							key={character.name}
 						>
-							<h1 className="my-2 text-3xl">{character.name}</h1>
 							<img
 								width={60}
-								src={`images/${character.name}.webp`}
-								className="mb-2"
+								src={`identity/${character.name}.webp`}
+								className="w-full"
 								alt=""
 							/>
+							<h1 className="text-3xl w-full border-t border-black py-1 text-center bg-pink-400 text-white">{character.name}</h1>
 						</div>
 					);
 				})}

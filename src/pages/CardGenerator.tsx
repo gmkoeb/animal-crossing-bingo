@@ -99,25 +99,21 @@ export const CardGenerator = () => {
 								>
 									{character.name === "Free" ? (
 										<div className="w-full">
-											<h1 className="text-center text-2xl font-bold text-green-400">
-												{character.name}
-											</h1>
 											<img
-												width={60}
 												src={`images/${character.name}.webp`}
-												className="mb-2"
 												alt=""
 											/>
+											<h1 className="text-center font-bold text-green-400">
+												{character.name}
+											</h1>
 										</div>
 									) : (
 										<>
-											<h1 className="text-center my-2">{character.name}</h1>
 											<img
-												width={30}
-												src={`images/${character.name}.webp`}
-												className="mb-2"
+												src={`identity/${character.name}.webp`}
 												alt=""
 											/>
+											<h1 className="text-center border-t w-full bg-pink-400 text-white border-black">{character.name}</h1>
 										</>
 									)}
 								</div>
