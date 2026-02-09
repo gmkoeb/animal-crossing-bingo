@@ -80,11 +80,11 @@ export const CardGenerator = () => {
 	}, []);
 
 	return (
-		<div className="grid grid-cols-4">
+		<div className="grid grid-cols-3">
 			{cards.map((card) => {
 				return (
 					<div key={`${card.hash}`} className="grid grid-cols-5 mx-10 my-20">
-						<div className="flex text-6xl absolute gap-11.5 ml-6 -translate-y-20">
+						<div className="flex text-6xl absolute gap-19.5 ml-10 -translate-y-20">
 							<p>B</p>
 							<p>I</p>
 							<p>N</p>
