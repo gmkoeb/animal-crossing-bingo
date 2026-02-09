@@ -7,7 +7,7 @@ export const Home = () => {
 
 	useEffect(() => {
 		setCharacters([...characters].sort((a, b) => a.name.localeCompare(b.name)));
-	}, [characters]);
+	}, [])
 
 	return (
 		<div>
