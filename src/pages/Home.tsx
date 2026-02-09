@@ -74,7 +74,7 @@ export const Home = () => {
 					onClick={() => setDrawnCharacter(undefined)}
 				>
 					<div
-						className="w-75 bg-white shadow-2xl rounded-lg overflow-hidden"
+						className="bg-white shadow-2xl rounded-lg overflow-hidden w-140"
 					>
 						<h2 className="text-center bg-pink-400 text-white text-xl py-1">
 							Resultado do sorteio
