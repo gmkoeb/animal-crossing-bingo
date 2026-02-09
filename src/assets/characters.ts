@@ -1,4 +1,4 @@
-import type { Character } from "../App";
+import type { Character } from "../pages/CardGenerator";
 
 export const charactersArray: Character[] = [
   { name: "Boots", category: "B" },
