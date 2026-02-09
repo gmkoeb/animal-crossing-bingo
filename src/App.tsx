@@ -18,20 +18,18 @@ function App() {
     return array;
   }
   
-  function generateBingoCard(array: Character[], quantity: number){
-    setCards([])
+  function generateBingoCards(array: Character[], quantity: number){
+    const cardsArray: Character[][] = []
     for (let i = 0; i < quantity; i++){
-      const bingoArray = shuffleArray(array).slice(0, 25)
-      bingoArray[12] = {"name": "Free", "category": "Free"}
-      setCards(prev => [
-        ...prev,
-        bingoArray
-      ])
+      const card = shuffleArray([...array]).slice(0, 25)
+      card[12] = {"name": "Free", "category": "Free"}
+      cardsArray.push(card)
     }
+    setCards(cardsArray) 
   }
 
   useEffect(() => {
-    generateBingoCard(charactersArray, 25)
+    generateBingoCards(charactersArray, 25)
   }, [])
 
   return (
