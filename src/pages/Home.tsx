@@ -12,7 +12,7 @@ export const Home = () => {
 		const index = Math.floor(Math.random() * characters.length)
 		const rolledCharacter = characters[index]
 		setRolledCharacters(prev => [...prev, rolledCharacter])
-		setCharacters(prev => prev.filter(character => character !== rolledCharacter))
+		setCharacters(prev => prev.filter((_, i) => i !== index));
 	}
 
 	return (
