@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { charactersArray } from "../assets/characters";
 import type { Character } from "./CardGenerator";
 
@@ -8,20 +8,12 @@ export const Home = () => {
 	const [rolledCharacters, setRolledCharacters] = useState<Character[]>([])
 
 	function roll() {
+		if (characters.length === 0) return;
 		const index = Math.floor(Math.random() * characters.length)
 		const rolledCharacter = characters[index]
-		if (rolledCharacters.includes(rolledCharacter)){
-			if (rolledCharacters.length < 75){
-				roll()
-			}
-		} else {
-			setRolledCharacters(prev => [...prev, rolledCharacter])
-		}
+		setRolledCharacters(prev => [...prev, rolledCharacter])
+		setCharacters(prev => prev.filter(character => character !== rolledCharacter))
 	}
-
-	useEffect(() => {
-		setCharacters([...characters].sort((a, b) => a.name.localeCompare(b.name)));
-	}, [])
 
 	return (
 		<div>
@@ -29,13 +21,13 @@ export const Home = () => {
 				Bingo da Liesel - {round}
 				{"\u00AA"} Rodada
 			</h1>
-			<button onClick={() => roll()}>Rolar</button>
+			<button type="button" onClick={() => roll()}>Rolar</button>
 			<div className="grid grid-cols-10 mx-20 mb-20">
-				{characters.map((character) => {
+				{charactersArray.sort((a, b) => a.name.localeCompare(b.name)).map((character) => {
 					return (
 						<div
 							data-active={rolledCharacters.includes(character)}
-							className="border w-full h-full flex flex-col items-center justify-center data-[active=true]:brightness-50 data-[active=true]:grayscale"
+							className="border w-full h-full flex flex-col items-center justify-center data-[active=true]:brightness-25 data-[active=true]:grayscale"
 							key={character.name}
 						>
 							<img

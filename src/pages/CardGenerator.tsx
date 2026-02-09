@@ -74,7 +74,7 @@ export const CardGenerator = () => {
 		}
 		setCards(cardsArray);
 	}
-  
+
 	useEffect(() => {
 		generateBingoCards(25);
 	}, []);
@@ -99,21 +99,17 @@ export const CardGenerator = () => {
 								>
 									{character.name === "Free" ? (
 										<div className="w-full">
-											<img
-												src={`images/${character.name}.webp`}
-												alt=""
-											/>
+											<img src={`images/${character.name}.webp`} alt="" />
 											<h1 className="text-center font-bold text-green-400">
 												{character.name}
 											</h1>
 										</div>
 									) : (
 										<>
-											<img
-												src={`identity/${character.name}.webp`}
-												alt=""
-											/>
-											<h1 className="text-center border-t w-full bg-pink-400 text-white border-black">{character.name}</h1>
+											<img src={`identity/${character.name}.webp`} alt="" />
+											<h1 className="text-center border-t w-full bg-pink-400 text-white border-black">
+												{character.name}
+											</h1>
 										</>
 									)}
 								</div>
