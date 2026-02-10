@@ -25,18 +25,18 @@ export const Home = () => {
 
 	return (
 		<div>
-			<h1 className="text-center text-[6vh] mb-4">
-				Bingo da Liesel - {round}
-				{"\u00AA"} Rodada
-			</h1>
-			<div className="flex justify-between mx-20 mb-4">
+			<div className="flex justify-between mx-60 mt-10 mb-5">
 				<button
-					className="border px-10 text-[4vh] rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
+					className="w-[20vw] text-[4vh] rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
 					type="button"
 					onClick={draw}
 				>
 					Sortear
 				</button>
+				<h1 className="text-center text-[6vh] mb-4 font-bold text-pink-500">
+					Bingo da Liesel - {round}
+					{"\u00AA"} Rodada
+				</h1>
 				<button
 					className="border px-10 text-[4vh] rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
 					type="button"
@@ -45,14 +45,14 @@ export const Home = () => {
 					Nova Rodada
 				</button>
 			</div>
-			<div className="grid grid-cols-15 mx-20 flex-1">
+			<div className="grid grid-cols-15 mx-60 flex-1">
 				{charactersArray
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((character) => {
 						return (
 							<div
 								data-active={drawnCharacters.includes(character)}
-								className="border w-full h-full flex flex-col flex-1 items-center justify-center hover:opacity-75 duration-300 brightness-50 grayscale data-[active=true]:brightness-100 data-[active=true]:grayscale-0"
+								className="border w-full h-full flex flex-col flex-1 items-center justify-center hover:opacity-90 duration-300 brightness-50 grayscale data-[active=true]:brightness-100 data-[active=true]:grayscale-0"
 								key={character.name}
 							>
 								<img
@@ -61,7 +61,7 @@ export const Home = () => {
 									className="w-full"
 									alt=""
 								/>
-								<h1 className="text-[3vh] w-full border-t border-black text-center bg-pink-400 text-white">
+								<h1 className="text-[2vh] w-full border-t border-black text-center bg-pink-400 text-white">
 									{character.name}
 								</h1>
 							</div>
