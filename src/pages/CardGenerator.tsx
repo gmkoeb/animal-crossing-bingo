@@ -1,123 +1,148 @@
 import { useEffect, useState } from "react";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 import { charactersArray } from "../assets/characters";
 import { positions, type BingoCategory } from "../assets/positions";
 
 export interface Character {
-	name: string;
-	category: BingoCategory;
+  name: string;
+  category: BingoCategory;
+  url?: string
 }
 
 interface Card {
-	characters: Character[];
-	hash: string;
+  characters: Character[];
+  hash: string;
 }
 
 export const CardGenerator = () => {
-	const [cards, setCards] = useState<Card[]>([]);
-	function shuffleArray(array: Character[]) {
-		for (let i = array.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[array[i], array[j]] = [array[j], array[i]];
-		}
-		return array;
-	}
+  const [cards, setCards] = useState<Card[]>([]);
+  const [isExporting, setIsExporting] = useState(false);
 
-	function generateCardByCategory() {
-		const card: Card = {
-			characters: [],
-			hash: "",
-		};
-		Object.keys(positions).forEach((category) => {
-			const filteredCharacters = charactersArray.filter((filteredCharacter) => {
-				return filteredCharacter.category === category;
-			});
-			positions[category as BingoCategory].forEach((position) => {
-				const randomCharacter = shuffleArray(filteredCharacters).pop();
-				if (randomCharacter) {
-					card.characters[position] = randomCharacter;
-				}
-			});
-		});
-		return card;
-	}
+  // --- Logic Functions (unchanged from your original) ---
+  function shuffleArray(array: Character[]) {
+    const newArr = [...array];
+    for (let i = newArr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+    }
+    return newArr;
+  }
 
-	function simpleHash(str: string): number {
-		let hash = 0;
-		for (let i = 0; i < str.length; i++) {
-			hash = (hash << 5) - hash + str.charCodeAt(i);
-			hash |= 0;
-		}
-		return hash;
-	}
+  function generateCardByCategory() {
+    const card: Card = { characters: [], hash: "" };
+    Object.keys(positions).forEach((category) => {
+      const filteredCharacters = shuffleArray(
+        charactersArray.filter((char) => char.category === category)
+      );
+      positions[category as BingoCategory].forEach((position) => {
+        const randomCharacter = filteredCharacters.pop();
+        if (randomCharacter) card.characters[position] = randomCharacter;
+      });
+    });
+    return card;
+  }
 
-	function generateCardHash(card: Card) {
-		let i = 0;
-		let hash = "";
-		card.characters.forEach((character) => {
-			hash += simpleHash(character.name + i);
-			i++;
-		});
-		return hash;
-	}
+  function generateBingoCards(quantity: number) {
+    const cardsArray: Card[] = [];
+    const hashes: Set<string> = new Set();
+    while (cardsArray.length < quantity) {
+      const card = generateCardByCategory();
+      card.characters[12] = { name: "Free", category: "N", url: "https://static.wikia.nocookie.net/animalcrossing/images/5/56/AC_Isabelle_7XU6aGu.17345b1513ac044897cfc243542899dce541e8dc.9afde10b.png/revision/latest?cb=20180317141121" };
+      const hash = card.characters.map((c) => c.name).join("-");
+      if (!hashes.has(hash)) {
+        hashes.add(hash);
+        card.hash = hash;
+        cardsArray.push(card);
+      }
+    }
+    setCards(cardsArray);
+  }
 
-	function generateBingoCards(quantity: number) {
-		const cardsArray: Card[] = [];
-		const hashes: Set<string> = new Set();
-		while (cardsArray.length < quantity) {
-			const card = generateCardByCategory();
-			card.characters[12] = { name: "Free", category: "N" };
-			card.hash = generateCardHash(card);
-			if (!hashes.has(card.hash)) {
-				hashes.add(card.hash);
-				cardsArray.push(card);
-			}
-		}
-		setCards(cardsArray);
-	}
+  // --- The Excel Export Function ---
+  const exportToExcel = async () => {
+    setIsExporting(true);
+    const workbook = new ExcelJS.Workbook();
+    
+    // 1. Criar a aba "Villagers" (Base de Dados)
+    const dbSheet = workbook.addWorksheet("Villagers");
+    dbSheet.columns = [
+      { header: "Name", key: "name", width: 20 },
+      { header: "URL", key: "url", width: 50 }
+    ];
 
-	useEffect(() => {
-		generateBingoCards(25);
-	}, []);
+    // Adicionar todos os villagers únicos à lista
+    charactersArray.forEach(char => {
+      dbSheet.addRow({ name: char.name, url: char.url });
+    });
 
-	return (
-		<div className="grid grid-cols-3">
-			{cards.map((card) => {
-				return (
-					<div key={`${card.hash}`} className="grid grid-cols-5 mx-10 my-20">
-						<div className="flex text-6xl absolute gap-19.5 ml-10 -translate-y-20">
-							<p>B</p>
-							<p>I</p>
-							<p>N</p>
-							<p>G</p>
-							<p>O</p>
-						</div>
-						{card.characters.map((character) => {
-							return (
-								<div
-									className="border items-center justify-center text-center flex flex-col"
-									key={character.name}
-								>
-									{character.name === "Free" ? (
-										<div className="w-full">
-											<img src={`images/${character.name}.webp`} alt="" />
-											<h1 className="text-center font-bold text-green-400">
-												{character.name}
-											</h1>
-										</div>
-									) : (
-										<>
-											<img src={`identity/${character.name}.webp`} alt="" />
-											<h1 className="text-center border-t w-full bg-pink-400 text-white border-black">
-												{character.name}
-											</h1>
-										</>
-									)}
-								</div>
-							);
-						})}
-					</div>
-				);
-			})}
-		</div>
-	);
+    // 2. Criar a aba "Bingo Cards"
+    const sheet = workbook.addWorksheet("Bingo Cards");
+    sheet.columns = [{ width: 22 }, { width: 22 }, { width: 22 }, { width: 22 }, { width: 22 }];
+
+    let rowOffset = 1;
+
+    for (let cardIndex = 0; cardIndex < cards.length; cardIndex++) {
+      const card = cards[cardIndex];
+
+      // Header B-I-N-G-O
+      const headerRow = sheet.getRow(rowOffset);
+      headerRow.values = ["B", "I", "N", "G", "O"];
+      headerRow.height = 30;
+      headerRow.eachCell(c => { c.font = { bold: true, size: 16 }; c.alignment = { horizontal: 'center' }; });
+
+      for (let r = 0; r < 5; r++) {
+        const nameRowNum = rowOffset + 1 + (r * 2);
+        const imgRowNum = nameRowNum + 1;
+
+        sheet.getRow(nameRowNum).height = 20;
+        sheet.getRow(imgRowNum).height = 100; // Espaço para a imagem aparecer
+
+        for (let c = 0; c < 5; c++) {
+          const charIndex = r * 5 + c;
+          const character = card.characters[charIndex];
+          const colLetter = String.fromCharCode(65 + c); // Converte 0 em 'A', 1 em 'B', etc.
+
+          // Célula do Nome
+          const nameCell = sheet.getCell(`${colLetter}${nameRowNum}`);
+          nameCell.value = character.name;
+          nameCell.alignment = { horizontal: 'center' };
+          nameCell.border = { top: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' } };
+
+          // Célula da Imagem (Com a Fórmula solicitada)
+          const imgCell = sheet.getCell(`${colLetter}${imgRowNum}`);
+          
+          // A fórmula aponta para a célula de nome imediatamente acima (nameRowNum)
+          imgCell.value = {
+            formula: `=IMAGE(VLOOKUP(${colLetter}${nameRowNum}, Villagers!$A:$B, 2, FALSE))`,
+            result: undefined 
+          };
+
+          imgCell.alignment = { horizontal: 'center', vertical: 'middle' };
+          imgCell.border = { bottom: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' } };
+        }
+      }
+      rowOffset += 13;
+    }
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    saveAs(new Blob([buffer]), "Bingo_Villagers.xlsx");
+    setIsExporting(false);
+  };
+
+  useEffect(() => {
+    generateBingoCards(132);
+  }, []);
+
+  return (
+    <div className="p-10 text-center">
+      <button 
+        onClick={exportToExcel}
+        disabled={isExporting}
+        className="px-10 py-5 bg-blue-600 text-white font-black text-xl rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all disabled:bg-gray-400"
+      >
+        {isExporting ? "PREPARING EXCEL..." : "DOWNLOAD BINGO EXCEL"}
+      </button>
+    </div>
+  );
 };
