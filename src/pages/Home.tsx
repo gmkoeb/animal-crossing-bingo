@@ -25,34 +25,34 @@ export const Home = () => {
 
 	return (
 		<div>
-			<h1 className="text-center text-6xl mb-4">
+			<h1 className="text-center text-[6vh] mb-4">
 				Bingo da Liesel - {round}
 				{"\u00AA"} Rodada
 			</h1>
 			<div className="flex justify-between mx-20 mb-4">
 				<button
-					className="border w-40 text-2xl rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
+					className="border px-10 text-[4vh] rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
 					type="button"
 					onClick={draw}
 				>
 					Sortear
 				</button>
 				<button
-					className="border w-40 text-2xl rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
+					className="border px-10 text-[4vh] rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
 					type="button"
 					onClick={startNewRound}
 				>
 					Nova Rodada
 				</button>
 			</div>
-			<div className="grid grid-cols-10 mx-20 mb-20">
+			<div className="grid grid-cols-15 mx-20 flex-1">
 				{charactersArray
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((character) => {
 						return (
 							<div
 								data-active={drawnCharacters.includes(character)}
-								className="border w-full h-full flex flex-col items-center justify-center hover:opacity-75 duration-300 data-[active=true]:brightness-50 data-[active=true]:grayscale"
+								className="border w-full h-full flex flex-col flex-1 items-center justify-center hover:opacity-75 duration-300 brightness-50 grayscale data-[active=true]:brightness-100 data-[active=true]:grayscale-0"
 								key={character.name}
 							>
 								<img
@@ -61,7 +61,7 @@ export const Home = () => {
 									className="w-full"
 									alt=""
 								/>
-								<h1 className="text-3xl w-full border-t border-black py-1 text-center bg-pink-400 text-white">
+								<h1 className="text-[3vh] w-full border-t border-black text-center bg-pink-400 text-white">
 									{character.name}
 								</h1>
 							</div>
@@ -74,9 +74,9 @@ export const Home = () => {
 					onClick={() => setDrawnCharacter(undefined)}
 				>
 					<div
-						className="bg-white shadow-2xl rounded-lg overflow-hidden w-140"
+						className="bg-white shadow-2xl rounded-lg overflow-hidden w-fit"
 					>
-						<h2 className="text-center bg-pink-400 text-white text-xl py-1">
+						<h2 className="text-center text-[5vh] bg-pink-400 text-white text-xl p-5">
 							Resultado do sorteio
 						</h2>
 
@@ -86,11 +86,11 @@ export const Home = () => {
 							alt={drawnCharacter.name}
 						/>
 
-						<h1 className="text-3xl w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
+						<h1 className="text-[3vh] w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
 							{drawnCharacter.category} - {drawnCharacter.name}
 						</h1>
 						<button
-							className="w-full py-3 bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
+							className="w-full py-3 text-[2vh] bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
 							onClick={() => setDrawnCharacter(undefined)}
 						>
 							Fechar
