@@ -27,7 +27,7 @@ export const Home = () => {
 		<div>
 			<div className="flex justify-between mx-60 mt-10 mb-5">
 				<button
-					className="w-[20vw] text-[4vh] rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
+					className="w-[10vw] text-[2vh] rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
 					type="button"
 					onClick={draw}
 				>
@@ -38,14 +38,14 @@ export const Home = () => {
 					{"\u00AA"} Rodada
 				</h1>
 				<button
-					className="border px-10 text-[4vh] rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
+					className="border px-10 text-[2vh] rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
 					type="button"
 					onClick={startNewRound}
 				>
 					Nova Rodada
 				</button>
 			</div>
-			<div className="grid grid-cols-15">
+			<div className="grid grid-cols-12">
 				{charactersArray
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((character) => {
@@ -61,7 +61,7 @@ export const Home = () => {
 									className="w-full"
 									alt=""
 								/>
-								<h1 className="text-[8vh] w-full border-t border-black text-center bg-pink-400 text-white">
+								<h1 className="text-[6vh] w-full border-t border-black text-center bg-pink-400 text-white">
 									{character.name}
 								</h1>
 							</div>
