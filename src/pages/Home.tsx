@@ -25,7 +25,7 @@ export const Home = () => {
 
 	return (
 		<div>
-			<div className="flex justify-between fixed top-0 z-100 right-1/3">
+			<div className="flex justify-between fixed bottom-0 z-100 right-0">
 				<button
 					className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
 					type="button"
