@@ -61,7 +61,7 @@ export const Home = () => {
 									className="w-full"
 									alt=""
 								/>
-								<h1 className="text-[8vh] w-full border-t border-black text-center bg-pink-400 text-white">
+								<h1 className="text-[3.5vh] w-full border-t border-black text-center bg-pink-400 text-white">
 									{character.name}
 								</h1>
 							</div>
