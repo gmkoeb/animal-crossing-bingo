@@ -86,11 +86,11 @@ export const Home = () => {
 							alt={drawnCharacter.name}
 						/>
 
-						<h1 className="text-[4vh] w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
+						<h1 className="text-[5.5vh] w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
 							{drawnCharacter.category} - {drawnCharacter.name}
 						</h1>
 						<button
-							className="w-full py-3 text-[2vh] bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
+							className="w-full py-3 text-[2.5vh] bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
 							onClick={() => setDrawnCharacter(undefined)}
 						>
 							Fechar
