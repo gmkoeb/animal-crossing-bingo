@@ -45,7 +45,7 @@ export const Home = () => {
 					Nova Rodada
 				</button>
 			</div>
-			<div className="grid grid-cols-15 mx-60 flex-1">
+			<div className="grid grid-cols-10 mx-60 flex-1">
 				{charactersArray
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((character) => {
