@@ -25,7 +25,7 @@ export const Home = () => {
 
 	return (
 		<div>
-			<div className="flex justify-between fixed bottom-0 z-100 right-0">
+			<div className="flex justify-between fixed bottom-10 z-100 right-20">
 				<button
 					className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
 					type="button"
@@ -33,12 +33,12 @@ export const Home = () => {
 				>
 					Sortear
 				</button>
-				<h1 className="text-center text-6xl mb-4 font-bold text-pink-500">
+				<h1 className="text-center text-6xl mb-4 font-bold text-black mx-10">
 					Bingo da Liesel - {round}
 					{"\u00AA"} Rodada
 				</h1>
 				<button
-					className="border px-10 text-lg rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
+					className="border px-10 text-lg rounded-lg text-center py-1 bg-pink-400 hover:opacity-85 duration-300 cursor-pointer text-white"
 					type="button"
 					onClick={startNewRound}
 				>
