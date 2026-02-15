@@ -61,7 +61,7 @@ export const Home = () => {
 									className="w-full"
 									alt=""
 								/>
-								<h1 className="text-[2vh] w-full border-t border-black text-center bg-pink-400 text-white">
+								<h1 className="text-[2.5vh] w-full border-t border-black text-center bg-pink-400 text-white">
 									{character.name}
 								</h1>
 							</div>
@@ -74,7 +74,7 @@ export const Home = () => {
 					onClick={() => setDrawnCharacter(undefined)}
 				>
 					<div
-						className="bg-white shadow-2xl rounded-lg overflow-hidden w-fit"
+						className="bg-white shadow-2xl rounded-lg overflow-hidden w-[40dvw]"
 					>
 						<h2 className="text-center text-[5vh] bg-pink-400 text-white text-xl p-5">
 							Resultado do sorteio
@@ -86,7 +86,7 @@ export const Home = () => {
 							alt={drawnCharacter.name}
 						/>
 
-						<h1 className="text-[3vh] w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
+						<h1 className="text-[4vh] w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
 							{drawnCharacter.category} - {drawnCharacter.name}
 						</h1>
 						<button
