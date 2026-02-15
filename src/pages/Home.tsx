@@ -25,7 +25,7 @@ export const Home = () => {
 
 	return (
 		<div>
-			<div className="flex justify-between mx-60 mt-10 mb-5">
+			<div className="flex justify-between mx-60">
 				<button
 					className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
 					type="button"
@@ -45,7 +45,7 @@ export const Home = () => {
 					Nova Rodada
 				</button>
 			</div>
-			<div className="grid grid-cols-13">
+			<div className="grid grid-cols-14">
 				{charactersArray
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((character) => {
