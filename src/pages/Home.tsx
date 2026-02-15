@@ -27,18 +27,18 @@ export const Home = () => {
 		<div>
 			<div className="flex justify-between mx-60 mt-10 mb-5">
 				<button
-					className="w-[10vw] text-[2vh] rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
+					className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
 					type="button"
 					onClick={draw}
 				>
 					Sortear
 				</button>
-				<h1 className="text-center text-[6vh] mb-4 font-bold text-pink-500">
+				<h1 className="text-center text-6xl mb-4 font-bold text-pink-500">
 					Bingo da Liesel - {round}
 					{"\u00AA"} Rodada
 				</h1>
 				<button
-					className="border px-10 text-[2vh] rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
+					className="border px-10 text-lg rounded-lg text-center py-1 hover:bg-pink-400 hover:text-white duration-300 cursor-pointer"
 					type="button"
 					onClick={startNewRound}
 				>
