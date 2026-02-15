@@ -52,7 +52,7 @@ export const Home = () => {
 						return (
 							<div
 								data-active={drawnCharacters.includes(character)}
-								className="border w-full h-full flex flex-col flex-1 items-center justify-center hover:opacity-90 duration-300 brightness-50 grayscale data-[active=true]:brightness-100 data-[active=true]:grayscale-0"
+								className="border w-full h-full flex flex-col flex-1 items-center justify-center hover:opacity-90 duration-300 grayscale data-[active=true]:brightness-100 data-[active=true]:grayscale-0"
 								key={character.name}
 							>
 								<img
