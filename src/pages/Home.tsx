@@ -27,7 +27,7 @@ export const Home = () => {
 		<div>
 			<div className="flex justify-between fixed bottom-10 z-100 right-10">
 				<button
-					className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-85 duration-300 cursor-pointer"
+					className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-90 duration-300 cursor-pointer"
 					type="button"
 					onClick={draw}
 				>
@@ -38,7 +38,7 @@ export const Home = () => {
 					{"\u00AA"} Rodada
 				</h1>
 				<button
-					className="border px-10 text-lg rounded-lg text-center py-1 bg-pink-400 hover:opacity-85 duration-300 cursor-pointer text-white"
+					className="px-10 text-lg rounded-lg text-center py-1 bg-pink-400 hover:opacity-90 duration-300 cursor-pointer text-white"
 					type="button"
 					onClick={startNewRound}
 				>
