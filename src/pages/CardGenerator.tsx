@@ -135,7 +135,7 @@ export const CardGenerator = () => {
   }, []);
 
   return (
-    <div className="p-10 text-center">
+    <div className="p-10 text-center bg-cover bg-center bg-no-repeat min-h-screen">
       <button 
         onClick={exportToExcel}
         disabled={isExporting}
