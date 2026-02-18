@@ -82,7 +82,7 @@ export const Home = () => {
 						{isDrawing && (
 							<img
 								src={"drawingGif.gif"}
-								className="w-1/2 h-auto"
+								className="w-[40dvw] h-auto"
 								alt={"Drawing suspense gif"}
 							/>
 						)}
