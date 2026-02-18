@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { charactersArray } from "../assets/characters";
 import type { Character } from "./CardGenerator";
 
@@ -8,39 +8,55 @@ export const Home = () => {
 	const [characters, setCharacters] = useState(charactersArray);
 	const [drawnCharacters, setDrawnCharacters] = useState<Character[]>([]);
 	const [drawnCharacter, setDrawnCharacter] = useState<Character>();
-
+	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	
 	useEffect(() => {
-		if (!isDrawing) return;
-		const interval = setInterval(() => {
+		return () => {
+			if (intervalRef.current) clearInterval(intervalRef.current);
+			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+		};
+	}, []);
+	
+	function draw() {
+		if (characters.length === 0) return;
+
+		setIsDrawing(true);
+
+		intervalRef.current = setInterval(() => {
 			const randomIndex = Math.floor(Math.random() * characters.length);
 			setDrawnCharacter(characters[randomIndex]);
 		}, 300);
 
-		return () => clearInterval(interval);
-	}, [isDrawing]);
-
-	function draw() {
-		if (characters.length === 0) return;
-
-		const index = Math.floor(Math.random() * characters.length);
-		const winner = characters[index];
-
-		const placeholder = characters[Math.floor(Math.random() * characters.length)];
- 	 	setDrawnCharacter(placeholder);
-		
-		setIsDrawing(true)
-
-		setTimeout(() => {
-			setDrawnCharacter(winner);
-			setDrawnCharacters((prev) => [...prev, winner]);
-			setCharacters((prev) => prev.filter((_, i) => i !== index));
-			setIsDrawing(false)
+		timeoutRef.current = setTimeout(() => {
+			finishDraw();
 		}, 5000);
 	}
 
+	function finishDraw() {
+		if (intervalRef.current) {
+			clearInterval(intervalRef.current);
+			intervalRef.current = null;
+		}
+
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+			timeoutRef.current = null;
+		}
+
+		const index = Math.floor(Math.random() * characters.length);
+		const finalCharacter = characters[index];
+
+		setDrawnCharacter(finalCharacter);
+		setDrawnCharacters((prev) => [...prev, finalCharacter]);
+		setCharacters((prev) => prev.filter((_, i) => i !== index));
+		setIsDrawing(false);
+	}
+
 	function stopDraw() {
-		setIsDrawing(false)
 		setDrawnCharacter(undefined)
+		if (!isDrawing) return;
+		finishDraw();
 	}
 
 	function startNewRound() {
