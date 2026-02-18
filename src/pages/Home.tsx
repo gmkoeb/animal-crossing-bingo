@@ -20,14 +20,19 @@ export const Home = () => {
 	}, [isDrawing]);
 
 	function draw() {
-		setDrawnCharacter(undefined);
 		if (characters.length === 0) return;
+
 		const index = Math.floor(Math.random() * characters.length);
-		const currentRolledCharacter = characters[index];
+		const winner = characters[index];
+
+		const placeholder = characters[Math.floor(Math.random() * characters.length)];
+ 	 	setDrawnCharacter(placeholder);
+		
 		setIsDrawing(true)
+
 		setTimeout(() => {
-			setDrawnCharacter(currentRolledCharacter);
-			setDrawnCharacters((prev) => [...prev, currentRolledCharacter]);
+			setDrawnCharacter(winner);
+			setDrawnCharacters((prev) => [...prev, winner]);
 			setCharacters((prev) => prev.filter((_, i) => i !== index));
 			setIsDrawing(false)
 		}, 5000);
