@@ -68,25 +68,31 @@ export const Home = () => {
 
 	return (
 		<div>
-			<div className="flex justify-between fixed bottom-10 z-100 right-10">
-				<button
-					className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-90 duration-300 cursor-pointer"
-					type="button"
-					onClick={draw}
-				>
-					Sortear
-				</button>
+			<div className="flex justify-between fixed bottom-10 z-100 right-10 items-center">
+				<div className="flex flex-col justify-center items-center">
+					<img src="drawingGif.gif" className="w-32" alt="" />
+					<button
+						className="w-42 text-lg rounded-lg text-center bg-pink-400 text-white py-1 hover:opacity-90 duration-300 cursor-pointer"
+						type="button"
+						onClick={draw}
+					>
+						Sortear
+					</button>
+				</div>
 				<h1 className="text-center text-6xl mb-4 font-bold text-white mx-5">
 					Bingo da Liesel - {round}
 					{"\u00AA"} Rodada
 				</h1>
-				<button
-					className="px-10 text-lg rounded-lg text-center py-1 bg-pink-400 hover:opacity-90 duration-300 cursor-pointer text-white"
-					type="button"
-					onClick={startNewRound}
-				>
-					Nova Rodada
-				</button>
+				<div className="flex flex-col justify-center items-center">
+					<img src="drawingGif.gif" className="w-32" alt="" />
+					<button
+						className="w-42 text-lg rounded-lg text-center py-1 bg-pink-400 hover:opacity-90 duration-300 cursor-pointer text-white"
+						type="button"
+						onClick={startNewRound}
+					>
+						Nova Rodada
+					</button>
+				</div>
 			</div>
 			<div className="grid grid-cols-14">
 				{charactersArray
