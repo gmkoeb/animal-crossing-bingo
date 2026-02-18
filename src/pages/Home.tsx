@@ -11,15 +11,19 @@ export const Home = () => {
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	
-	useEffect(() => {
-		return () => {
-			if (intervalRef.current) clearInterval(intervalRef.current);
-			if (timeoutRef.current) clearTimeout(timeoutRef.current);
-		};
-	}, []);
+	const clearAllTimers = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    intervalRef.current = null;
+    timeoutRef.current = null;
+  };
+
+  useEffect(() => {
+    return () => clearAllTimers();
+  }, []);
 	
 	function draw() {
-		if (characters.length === 0) return;
+		if (isDrawing || characters.length === 0) return;
 
 		setIsDrawing(true);
 
@@ -34,15 +38,7 @@ export const Home = () => {
 	}
 
 	function finishDraw() {
-		if (intervalRef.current) {
-			clearInterval(intervalRef.current);
-			intervalRef.current = null;
-		}
-
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current);
-			timeoutRef.current = null;
-		}
+		clearAllTimers();
 
 		const index = Math.floor(Math.random() * characters.length);
 		const finalCharacter = characters[index];
@@ -54,16 +50,21 @@ export const Home = () => {
 	}
 
 	function stopDraw() {
-		setDrawnCharacter(undefined)
-		if (!isDrawing) return;
-		finishDraw();
-	}
+    if (!isDrawing) {
+      setDrawnCharacter(undefined);
+      return;
+    }
+    finishDraw();
+  }
 
-	function startNewRound() {
-		setRound((prev) => prev + 1);
-		setDrawnCharacters([]);
-		setCharacters(charactersArray);
-	}
+  function startNewRound() {
+    clearAllTimers();
+    setIsDrawing(false);
+    setRound((prev) => prev + 1);
+    setDrawnCharacters([]);
+    setCharacters(charactersArray);
+    setDrawnCharacter(undefined);
+  }
 
 	return (
 		<div>
