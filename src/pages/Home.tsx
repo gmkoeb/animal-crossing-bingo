@@ -111,7 +111,7 @@ export const Home = () => {
 							</h1>
 							<button
 								className="w-full py-3 text-[2.5vh] bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
-								onClick={() => setDrawnCharacter(undefined)}
+								onClick={stopDraw}
 							>
 								Fechar
 							</button>
