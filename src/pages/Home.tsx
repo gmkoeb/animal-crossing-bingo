@@ -4,17 +4,23 @@ import type { Character } from "./CardGenerator";
 
 export const Home = () => {
 	const [round, setRound] = useState(1);
+	const [isDrawing, setIsDrawing] = useState(false);
 	const [characters, setCharacters] = useState(charactersArray);
 	const [drawnCharacters, setDrawnCharacters] = useState<Character[]>([]);
 	const [drawnCharacter, setDrawnCharacter] = useState<Character>();
 
 	function draw() {
+		setDrawnCharacter(undefined);
 		if (characters.length === 0) return;
 		const index = Math.floor(Math.random() * characters.length);
 		const currentRolledCharacter = characters[index];
-		setDrawnCharacter(currentRolledCharacter);
-		setDrawnCharacters((prev) => [...prev, currentRolledCharacter]);
-		setCharacters((prev) => prev.filter((_, i) => i !== index));
+		setIsDrawing(true)
+		setTimeout(() => {
+			setDrawnCharacter(currentRolledCharacter);
+			setDrawnCharacters((prev) => [...prev, currentRolledCharacter]);
+			setCharacters((prev) => prev.filter((_, i) => i !== index));
+			setIsDrawing(false)
+		}, 3000);
 	}
 
 	function startNewRound() {
@@ -68,34 +74,43 @@ export const Home = () => {
 						);
 					})}
 			</div>
-			{drawnCharacter && (
+			{(drawnCharacter || isDrawing) && (
 				<div
 					className="fixed inset-0 bg-black/60 backdrop-blur-sm z-100 flex items-center justify-center"
 					onClick={() => setDrawnCharacter(undefined)}
-				>
-					<div
-						className="bg-white shadow-2xl rounded-lg overflow-hidden w-[40dvw]"
 					>
-						<h2 className="text-center text-[5vh] bg-pink-400 text-white text-xl p-5">
-							Resultado do sorteio
-						</h2>
+						{isDrawing && (
+							<img
+								src={"drawingGif.gif"}
+								className="w-1/2 h-auto"
+								alt={"Drawing suspense gif"}
+							/>
+						)}
+						{(!isDrawing && drawnCharacter) && (
+							<div
+								className="bg-white shadow-2xl rounded-lg overflow-hidden w-[40dvw]"
+							>
+								<h2 className="text-center text-[5vh] bg-pink-400 text-white text-xl p-5">
+									Resultado do sorteio
+								</h2>
 
-						<img
-							src={`identity/${drawnCharacter.name}.webp`}
-							className="w-full h-auto"
-							alt={drawnCharacter.name}
-						/>
+								<img
+									src={`identity/${drawnCharacter.name}.webp`}
+									className="w-full h-auto"
+									alt={drawnCharacter.name}
+								/>
 
-						<h1 className="text-[5.5vh] w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
-							{drawnCharacter.category} - {drawnCharacter.name}
-						</h1>
-						<button
-							className="w-full py-3 text-[2.5vh] bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
-							onClick={() => setDrawnCharacter(undefined)}
-						>
-							Fechar
-						</button>
-					</div>
+								<h1 className="text-[5.5vh] w-full border-t border-black py-2 text-center bg-pink-400 text-white font-bold">
+									{drawnCharacter.category} - {drawnCharacter.name}
+								</h1>
+								<button
+									className="w-full py-3 text-[2.5vh] bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 duration-300 cursor-pointer"
+									onClick={() => setDrawnCharacter(undefined)}
+								>
+									Fechar
+								</button>
+							</div>
+						)}
 				</div>
 			)}
 		</div>
